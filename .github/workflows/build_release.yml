@@ -75,7 +75,7 @@ jobs:
           name: "Doki Build ${{ steps.release_info.outputs.tag }}"
           body: |
             Automated Doki builds, generated on ${{ steps.release_info.outputs.formatted_date }}
-          files: app/build/outputs/apk/legacy/release.apk
+          files: app/build/outputs/apk/release/release.apk
           fail_on_unmatched_files: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
