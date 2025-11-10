@@ -5,7 +5,6 @@ on:
 
 env:
   APK_PATH: app/build/outputs/apk/legacy/app-legacy.apk
-  APK_NAME: legacy.apk
 
 jobs:
   build:
@@ -67,7 +66,7 @@ jobs:
         run: |
           echo "tag=$(date +'%Y%m%d')" >> $GITHUB_OUTPUT
           echo "formatted_date=$(date +'%Y/%m/%d')" >> $GITHUB_OUTPUT
-          mv ${{ env.APK_PATH }} $(dirname ${{ env.APK_PATH }})/${{ env.APK_NAME }}
+          mv ${{ env.APK_PATH }} $(dirname ${{ env.APK_PATH }})/legacy-release.apk
 
       - name: Upload to release 🌐
         uses: softprops/action-gh-release@v2
@@ -76,7 +75,7 @@ jobs:
           name: "Doki Build ${{ steps.release_info.outputs.tag }}"
           body: |
             Automated Doki builds, generated on ${{ steps.release_info.outputs.formatted_date }}
-          files: $(dirname ${{ env.APK_PATH }})/${{ env.APK_NAME }}
+          files: app/build/outputs/apk/legacy/legacy-release.apk
           fail_on_unmatched_files: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

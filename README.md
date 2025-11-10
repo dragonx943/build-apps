@@ -7,7 +7,7 @@
 | [![Stars](https://img.shields.io/github/stars/DokiTeam/build-apps.svg?style=flat)](https://github.com/DokiTeam/build-apps) | [![Discord](https://img.shields.io/discord/1435615296202477581.svg?label=discord&labelColor=7289da&color=2c2f33&style=flat)](https://discord.gg/PTd2bYgz9m) |
 
 ### Usage
-**Please follow [this document](https://github.com/DokiTeam/build-apps/tree/global/.github/workflows) to know how this one works.**
+**Please follow [this document](https://github.com/DokiTeam/build-apps/tree/global/GUIDE.md) to know how this repository works.**
 
 ### Contribute
 **👋 You can contribute by push your patches about [these workflows](https://github.com/DokiTeam/build-apps/tree/global/.github/workflows) (Actions) to this repository.**
