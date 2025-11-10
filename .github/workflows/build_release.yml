@@ -1,0 +1,82 @@
+name: Build Release Artifact
+
+on:
+  workflow_dispatch:
+
+env:
+  APK_PATH: app/build/outputs/apk/release/app-release.apk
+  APK_NAME: release.apk
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull upstream 🌏
+        uses: actions/checkout@v4
+        with:
+          repository: DokiTeam/Doki
+          ref: base
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up JDK 🚀
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Setup Gradle 🚀
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Setup Android SDK 🚀
+        uses: android-actions/setup-android@v3
+
+      - name: Build Release APK (Attempt 1) 💻
+        run: |
+          ./gradlew assembleRelease \
+          -Dtg_backup_bot_token=$(curl -s https://dragonx943.github.io/waydroid_x86_64/value.json) \
+          -Dgithub_updates_repo=${{ github.repository_owner }}
+        continue-on-error: true
+
+      - name: Build Release APK (Attempt 2) 💻
+        run: >-
+          if [ ! -f ${{ env.APK_PATH }} ]; then
+            pkill -f java &&
+            ./gradlew assembleRelease \
+          -Dtg_backup_bot_token=$(curl -s https://dragonx943.github.io/waydroid_x86_64/value.json) \
+          -Dgithub_updates_repo=${{ github.repository_owner }}
+          else
+            echo "✅ Release build already exists, skipping build attempt 2";
+          fi
+        continue-on-error: true
+
+      - name: Build Release APK (Attempt 3) 💻
+        run: >-
+          if [ ! -f ${{ env.APK_PATH }} ]; then
+            pkill -f java &&
+            ./gradlew assembleRelease \
+          -Dtg_backup_bot_token=$(curl -s https://dragonx943.github.io/waydroid_x86_64/value.json) \
+          -Dgithub_updates_repo=${{ github.repository_owner }}
+          else
+            echo "✅ Release build already exists, skipping build attempt 3";
+          fi
+        continue-on-error: false
+
+      - name: Generate package 📦
+        id: release_info
+        run: |
+          echo "tag=$(date +'%Y%m%d')" >> $GITHUB_OUTPUT
+          echo "formatted_date=$(date +'%Y/%m/%d')" >> $GITHUB_OUTPUT
+          mv ${{ env.APK_PATH }} $(dirname ${{ env.APK_PATH }})/${{ env.APK_NAME }}
+
+      - name: Upload to release 🌐
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.release_info.outputs.tag }}
+          name: "Doki Build ${{ steps.release_info.outputs.tag }}"
+          body: |
+            Automated Doki builds, generated on ${{ steps.release_info.outputs.formatted_date }}
+          files: $(dirname ${{ env.APK_PATH }})/${{ env.APK_NAME }}
+          fail_on_unmatched_files: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
