@@ -61,12 +61,28 @@ jobs:
           fi
         continue-on-error: false
 
+      - name: Upload APK artifact 📤
+        uses: actions/upload-artifact@v4
+        with:
+          name: legacy-apk
+          path: ${{ env.APK_PATH }}
+          retention-days: 1
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download APK artifact 📥
+        uses: actions/download-artifact@v4
+        with:
+          name: legacy-apk
+
       - name: Generate package 📦
         id: release_info
         run: |
           echo "tag=$(date +'%Y%m%d')" >> $GITHUB_OUTPUT
           echo "formatted_date=$(date +'%Y/%m/%d')" >> $GITHUB_OUTPUT
-          mv ${{ env.APK_PATH }} app/build/outputs/apk/legacy/legacy-release.apk
+          mv app-legacy.apk legacy-release.apk
 
       - name: Upload to release 🌐
         uses: softprops/action-gh-release@v2
@@ -75,7 +91,7 @@ jobs:
           name: "Doki Build ${{ steps.release_info.outputs.tag }}"
           body: |
             Automated Doki builds, generated on ${{ steps.release_info.outputs.formatted_date }}
-          files: app/build/outputs/apk/legacy/legacy-release.apk
+          files: legacy-release.apk
           fail_on_unmatched_files: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
