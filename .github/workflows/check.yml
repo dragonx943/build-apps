@@ -14,10 +14,10 @@ jobs:
       - name: Check for updates 🔍
         id: check-updates
         run: |
-          last_run=$(curl -s "https://api.github.com/repos/${{ github.repository }}/actions/workflows/check.yml/runs?status=completed&per_page=1" | jq -r '.workflow_runs[0].created_at')
-          exts_updated=$(curl -s "https://api.github.com/repos/DokiTeam/doki-exts/commits?since=$last_run" | jq '. | length')
-          app_updated=$(curl -s "https://api.github.com/repos/DokiTeam/Doki/commits?since=$last_run" | jq '. | length')
-          if [ "$exts_updated" -gt "0" ] || [ "$app_updated" -gt "0" ]; then
+          since=$(date -u -d "24 hours ago" +"%Y-%m-%dT%H:%M:%SZ")
+          check_app=$(curl -s "https://api.github.com/repos/DokiTeam/Doki/commits?since=$since" | jq -r 'length')
+          check_exts=$(curl -s "https://api.github.com/repos/DokiTeam/doki-exts/commits?since=$since" | jq -r 'length')
+          if [ "$check_app" -gt "0" ] || [ "$check_exts" -gt "0" ]; then
             echo "has_changes=true" >> $GITHUB_OUTPUT
           else
             echo "has_changes=false" >> $GITHUB_OUTPUT
