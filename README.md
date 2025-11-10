@@ -1,0 +1,55 @@
+# Automation for Doki (Source code)
+
+### Please give the repo a :star:
+
+| Stars | Need help? |
+|-------|---------|
+| [![Stars](https://img.shields.io/github/stars/DokiTeam/build-apps.svg?style=flat)](https://github.com/DokiTeam/build-apps) | [![Discord](https://img.shields.io/discord/1435615296202477581.svg?label=discord&labelColor=7289da&color=2c2f33&style=flat)](https://discord.gg/PTd2bYgz9m) |
+
+### Usage
+**Please follow [this document](https://github.com/DokiTeam/build-apps/tree/global/.github/workflows) to know how this one works.**
+
+### Contribute
+**👋 You can contribute by push your patches about [these workflows](https://github.com/DokiTeam/build-apps/tree/global/.github/workflows) (Actions) to this repository.**
+
+-----------------
+
+### Doki (Sourcce code)
+
+https://github.com/DokiTeam/Doki
+
+### Extensions (Source code)
+
+https://github.com/DokiTeam/doki-exts
+
+### Report app issues
+
+https://github.com/DokiTeam/Doki/issues/new/
+
+### Report build issues
+
+https://github.com/DokiTeam/build-apps/issues/new
+
+### Report extension issues
+
+https://github.com/DokiTeam/doki-exts/issues/new/
+
+****
+
+### License
+
+[![GNU GPLv3 Image](https://www.gnu.org/graphics/gplv3-127x51.png)](http://www.gnu.org/licenses/gpl-3.0.en.html)
+
+<div align="left">
+
+You may copy, distribute and modify the software as long as you track changes/dates in source files. Any modifications
+to or software including (via compiler) GPL-licensed code must also be made available under the GPL along with build &
+install instructions.
+
+</div>
+
+### Disclaimer
+
+**`¯\_(ツ)_/¯`**
+
+This source has been built by contributors / users, the content inside has been provided by **[Gemini](https://gemini.google.com/)**, but where is it, no one knows. No one knows how it works.
