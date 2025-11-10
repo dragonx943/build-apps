@@ -66,7 +66,7 @@ jobs:
         run: |
           echo "tag=$(date +'%Y%m%d')" >> $GITHUB_OUTPUT
           echo "formatted_date=$(date +'%Y/%m/%d')" >> $GITHUB_OUTPUT
-          mv ${{ env.APK_PATH }} $(dirname ${{ env.APK_PATH }})/release.apk
+          mv ${{ env.APK_PATH }} app/build/outputs/apk/release/release.apk
 
       - name: Upload to release 🌐
         uses: softprops/action-gh-release@v2
