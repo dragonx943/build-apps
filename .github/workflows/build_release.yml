@@ -1,8 +1,8 @@
 name: Build Release Artifact
 
 on:
-  workflow_dispatch:
-
+  workflow_call:
+  
 env:
   APK_PATH: app/build/outputs/apk/release/app-release.apk
 
