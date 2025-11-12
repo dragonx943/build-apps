@@ -7,12 +7,12 @@ on:
 
 jobs:
   check:
+    name: 🌏 Check for updates
     runs-on: ubuntu-latest
     outputs:
       should_build: ${{ steps.check-updates.outputs.has_changes }}
     steps:
-      - name: Check for updates 🔍
-        id: check-updates
+      - id: check-updates
         run: |
           since=$(date -u -d "24 hours ago" +"%Y-%m-%dT%H:%M:%SZ")
           check_app=$(curl -s "https://api.github.com/repos/DokiTeam/Doki/commits?since=$since" | jq -r 'length')
@@ -23,17 +23,16 @@ jobs:
             echo "has_changes=false" >> $GITHUB_OUTPUT
           fi
 
-  trigger_builds:
+  build_release:
+    name: 🚀 Trigger Release Build
     needs: check
     if: needs.check.outputs.should_build == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo 🧩
-        uses: actions/checkout@v4
-        
-      - name: Trigger builds 🚀
-        run: |
-          gh workflow run build_release.yml
-          gh workflow run build_legacy.yml
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    uses: ./.github/workflows/build_release.yml
+    secrets: inherit
+
+  build_legacy:
+    name: 🚀 Trigger Legacy Build
+    needs: check
+    if: needs.check.outputs.should_build == 'true'
+    uses: ./.github/workflows/build_legacy.yml
+    secrets: inherit

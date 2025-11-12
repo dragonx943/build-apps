@@ -4,15 +4,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  trigger_builds:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo 🧩
-        uses: actions/checkout@v4
-        
-      - name: Trigger builds 🚀
-        run: |
-          gh workflow run build_release.yml
-          gh workflow run build_legacy.yml
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  build_release:
+    name: Trigger Release builds 🚀
+    uses: ./.github/workflows/build_release.yml
+
+  build_legacy:
+    name: Trigger Legacy builds 🚀
+    uses: ./.github/workflows/build_legacy.yml
