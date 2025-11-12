@@ -1,7 +1,7 @@
 name: Build Legacy Artifact
 
 on:
-  workflow_dispatch:
+  workflow_call:
 
 env:
   APK_PATH: app/build/outputs/apk/legacy/app-legacy.apk
