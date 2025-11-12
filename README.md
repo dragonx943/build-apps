@@ -14,7 +14,7 @@
 
 -----------------
 
-### Doki (Sourcce code)
+### Doki (Source code)
 
 https://github.com/DokiTeam/Doki
 
