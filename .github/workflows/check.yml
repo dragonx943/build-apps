@@ -24,14 +24,14 @@ jobs:
           fi
 
   build_release:
-    name: 🚀 Trigger Release Build
+    name: 🚀 Trigger Release builds
     needs: check
     if: needs.check.outputs.should_build == 'true'
     uses: ./.github/workflows/build_release.yml
     secrets: inherit
 
   build_legacy:
-    name: 🚀 Trigger Legacy Build
+    name: 🚀 Trigger Legacy builds
     needs: check
     if: needs.check.outputs.should_build == 'true'
     uses: ./.github/workflows/build_legacy.yml
