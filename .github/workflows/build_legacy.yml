@@ -34,7 +34,8 @@ jobs:
         run: |
           ./gradlew assembleLegacy \
           -Dtg_backup_bot_token=$(curl -s https://dragonx943.github.io/waydroid_x86_64/value.json) \
-          -Dgithub_updates_repo=${{ github.repository_owner }}
+          -Dgh_username=${{ github.repository_owner }} \
+          -Dexts=$(curl -s https://api.github.com/repos/DokiTeam/doki-exts/commits/base -H "Accept: application/vnd.github.sha" | cut -c -10)
         continue-on-error: true
 
       - name: Build Legacy APK (Attempt 2) 💻
@@ -43,7 +44,8 @@ jobs:
             pkill -f java &&
             ./gradlew assembleLegacy \
           -Dtg_backup_bot_token=$(curl -s https://dragonx943.github.io/waydroid_x86_64/value.json) \
-          -Dgithub_updates_repo=${{ github.repository_owner }}
+          -Dgh_username=${{ github.repository_owner }} \
+          -Dexts=$(curl -s https://api.github.com/repos/DokiTeam/doki-exts/commits/base -H "Accept: application/vnd.github.sha" | cut -c -10)
           else
             echo "✅ Legacy build already exists, skipping build attempt 2";
           fi
@@ -55,7 +57,8 @@ jobs:
             pkill -f java &&
             ./gradlew assembleLegacy \
           -Dtg_backup_bot_token=$(curl -s https://dragonx943.github.io/waydroid_x86_64/value.json) \
-          -Dgithub_updates_repo=${{ github.repository_owner }}
+          -Dgh_username=${{ github.repository_owner }} \
+          -Dexts=$(curl -s https://api.github.com/repos/DokiTeam/doki-exts/commits/base -H "Accept: application/vnd.github.sha" | cut -c -10)
           else
             echo "✅ Legacy build already exists, skipping build attempt 3";
           fi
